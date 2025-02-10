@@ -1,6 +1,7 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { Button, Flex, Form, Input, notification, Typography } from "antd";
 import authApi from "../api/authApi";
+import AuthContext from "../contexts/AuthContext";
 
 const { Title, Link, Text } = Typography;
 
@@ -20,6 +21,8 @@ const PASSWORD_RULES = [{ required: true, message: "Password is required" }];
 export default function LoginPage() {
   const [api, contextHolder] = notification.useNotification();
 
+  const { setUser } = useContext(AuthContext);
+
   const [loginForm] = Form.useForm();
 
   const handleLogin = useCallback(async (values) => {
@@ -32,6 +35,7 @@ export default function LoginPage() {
         message: "Login successfully",
         description: "You'll be redirected to homepage",
       });
+      setUser(loginResult.data);
     }
   }, []);
 
