@@ -5,7 +5,7 @@ import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 
-import HomePage from './components/HomePage';
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AuthContext from './contexts/AuthContext';
