@@ -4,6 +4,7 @@ const baseUrl = 'http://localhost:8000'
 
 const storyUrl = {
     getStories: baseUrl + '/api/v1/story',
+    getStory: baseUrl + '/api/v1/story/:id/detail'
 };
 
 const storyApi = {
@@ -11,7 +12,12 @@ const storyApi = {
         const response = await axios.get(storyUrl.getStories, {
             params: { keyword, page, pageSize, orderDirection, orderBy }
         });
-        console.log(response.data);
+        return response.data;
+    },
+
+    getStory: async (id) => {
+        const trueUrl = storyUrl.getStory.replace(":id", id);
+        const response = await axios.get(trueUrl);
         return response.data;
     }
 };

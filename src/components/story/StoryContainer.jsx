@@ -1,5 +1,6 @@
 import { Flex, Typography, Button, Space } from "antd";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Link, Text } = Typography;
 
@@ -17,6 +18,8 @@ const STORY_SUMMARY_STYLE = {
 };
 
 export default function StoryContainer(props) {
+  const navigate = useNavigate();
+
   return (
     <div className="story-container" style={STORY_CONTAINER_STYLE}>
       <Flex gap={20} className="story-header" style={STORY_HEADER}>
@@ -28,7 +31,7 @@ export default function StoryContainer(props) {
         <div className="story-summary" style={STORY_SUMMARY_STYLE}>
           <Text strong>{props.title}</Text>
           <br />
-          <Text italic>{props.collectionId}</Text>
+          <Text italic>{props.collectionTitle}</Text>
         </div>
         <div className="story-actions">
           <Button primary>Save to favorite</Button>
@@ -39,9 +42,11 @@ export default function StoryContainer(props) {
         <Text>{props.content}</Text>
       </div>
 
-      <Link>
-        <Text strong>Read more</Text>
-      </Link>
+      <Text strong>
+        <Link onClick={() => navigate("/story/" + props._id + "/read")}>
+          Read more
+        </Link>
+      </Text>
 
       <Flex
         justify="space-between"
@@ -50,7 +55,7 @@ export default function StoryContainer(props) {
       >
         <Text>View: {props.viewCount}</Text>
         <Text>
-          By {props.userId} at {props.createdAt}
+          By {props.userFullName} at {props.createdAt}
         </Text>
       </Flex>
     </div>

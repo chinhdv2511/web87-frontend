@@ -11,6 +11,9 @@ import RegisterPage from './pages/RegisterPage';
 import AuthContext from './contexts/AuthContext';
 import { useCallback, useEffect, useState } from 'react';
 import authApi from './api/authApi';
+import StoryListPage from './pages/home/StoryListPage';
+import ReadStoryPage from './pages/home/ReadStoryPage';
+import AboutPage from './pages/home/AboutPage';
 
 function App() {
 
@@ -45,7 +48,11 @@ function App() {
 
             {
               user && <>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<HomePage />}>
+                  <Route element={<StoryListPage />} path="" />
+                  <Route element={<ReadStoryPage />} path="story/:id/read" />
+                  <Route element={<AboutPage />} path="about" />
+                </Route>
               </>
             }
           </Routes>

@@ -1,4 +1,5 @@
 import React, { useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Flex, Form, Input, notification, Typography } from "antd";
 import authApi from "../api/authApi";
 import AuthContext from "../contexts/AuthContext";
@@ -19,6 +20,7 @@ const EMAIL_RULES = [{ required: true, message: "Email is required" }];
 const PASSWORD_RULES = [{ required: true, message: "Password is required" }];
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [api, contextHolder] = notification.useNotification();
 
   const { setUser } = useContext(AuthContext);
@@ -36,6 +38,7 @@ export default function LoginPage() {
         description: "You'll be redirected to homepage",
       });
       setUser(loginResult.data);
+      navigate("/");
     }
   }, []);
 
