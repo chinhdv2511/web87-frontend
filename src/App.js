@@ -14,6 +14,7 @@ import authApi from './api/authApi';
 import StoryListPage from './pages/home/StoryListPage';
 import ReadStoryPage from './pages/home/ReadStoryPage';
 import AboutPage from './pages/home/AboutPage';
+import CreateStoryPage from './pages/home/CreateStoryPage';
 
 function App() {
 
@@ -51,6 +52,8 @@ function App() {
                 <Route path="/" element={<HomePage />}>
                   <Route element={<StoryListPage />} path="" />
                   <Route element={<ReadStoryPage />} path="story/:id/read" />
+                  <Route element={<CreateStoryPage />} path="story/create" />
+                  <Route element={<CreateStoryPage />} path="story/:id/update" />
                   <Route element={<AboutPage />} path="about" />
                 </Route>
               </>

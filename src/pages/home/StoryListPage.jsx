@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Flex, Layout } from "antd";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Button, Flex, Layout } from "antd";
 
 import StoryList from "../../components/story/StoryList";
 import storyApi from "../../api/storyApi";
@@ -23,6 +23,8 @@ export default function StoryListPage() {
     stories: [],
     total: 0,
   });
+
+  const navigate = useNavigate();
 
   const changePage = (page, pageSize) => {
     setSearchParams({
@@ -55,7 +57,18 @@ export default function StoryListPage() {
 
   return (
     <Flex vertical gap={20} className="content" style={CONTENT_STYLE}>
-      <SearchStory searchStories={searchStories} />
+      <Flex align="center" justify="space-between">
+        <SearchStory searchStories={searchStories} />
+        <div>
+          <Button
+            type="primary"
+            size="large"
+            onClick={() => navigate("/story/create")}
+          >
+            Post new Story
+          </Button>
+        </div>
+      </Flex>
 
       <StoryList
         {...storyData}
