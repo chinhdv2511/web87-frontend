@@ -2,8 +2,9 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button, Flex, Layout } from "antd";
 
-import StoryList from "../../components/story/StoryList";
 import storyApi from "../../api/storyApi";
+import AuthContext from "../../contexts/AuthContext";
+import StoryList from "../../components/story/StoryList";
 import { SearchStory } from "../../components/story/SearchStory";
 
 const CONTENT_STYLE = {
@@ -14,6 +15,7 @@ const CONTENT_STYLE = {
 
 export default function StoryListPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user } = useContext(AuthContext);
 
   const keyword = searchParams.get("keyword") ?? "";
   const page = searchParams.get("page") ?? 1;
@@ -41,14 +43,23 @@ export default function StoryListPage() {
   };
 
   const fetchStories = async () => {
-    const responseData = await storyApi.getStories({
+    const response = await storyApi.getStories({
       keyword,
       page,
       pageSize,
       orderBy: "createdAt",
       orderDirection: "desc",
     });
-    setStoryData(responseData.data);
+
+    const newStoryData = {
+      stories: response.data.stories.map((story) => ({
+        ...story,
+        editable: story.userId == user?.id,
+      })),
+      total: response.data.total,
+    };
+
+    setStoryData(newStoryData);
   };
 
   useEffect(() => {

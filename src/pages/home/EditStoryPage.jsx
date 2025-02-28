@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Flex } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import StoryForm from "../../components/story/StoryForm";
 import storyApi from "../../api/storyApi";
 import collectionApi from "../../api/collectionApi";
@@ -12,10 +12,18 @@ const CONTENT_STYLE = {
   minWidth: "300px",
 };
 
-export default function CreateStoryPage() {
+export default function EditStoryPage() {
+  const [story, setStory] = useState(null);
   const [collections, setCollections] = useState([]);
   const { notifySuccess, notifyError } = useContext(NotificationContext);
   const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  const fetchStory = async () => {
+    const response = await storyApi.getStory(id);
+    setStory(response.data);
+  };
 
   const fetchCollections = async () => {
     const response = await collectionApi.getCollections();
@@ -23,25 +31,27 @@ export default function CreateStoryPage() {
   };
 
   const handleSubmitStoryForm = async (values) => {
-    const response = await storyApi.createStory(values);
+    const response = await storyApi.updateStory(id, values);
     if (response.isSuccess) {
-      notifySuccess("Post story successfully");
+      notifySuccess("Update story successfully");
       navigate("/");
     } else {
-      notifyError("Post story failed");
+      notifyError("Update story failed");
     }
   };
 
   useEffect(() => {
+    fetchStory(id);
     fetchCollections();
-  }, []);
+  }, [id]);
 
   return (
     <Flex vertical gap={20} className="content" style={CONTENT_STYLE}>
       <StoryForm
-        type="create"
-        onSubmit={handleSubmitStoryForm}
+        type="edit"
+        story={story}
         collections={collections}
+        onSubmit={handleSubmitStoryForm}
       />
     </Flex>
   );

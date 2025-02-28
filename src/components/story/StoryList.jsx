@@ -13,7 +13,7 @@ export default function StoryList(props) {
     <div className="story-list">
       <Flex vertical gap={20}>
         {stories.map((story) => (
-          <StoryContainer key={story._id} {...story} />
+          <StoryContainer key={story.id} {...story} />
         ))}
       </Flex>
       <br />

@@ -7,7 +7,7 @@ const HEADER_STYLE = {
   padding: "20px 30px",
   position: "sticky",
   top: "0px",
-  zIndex: 10000,
+  zIndex: 2,
   gap: "40px",
 };
 

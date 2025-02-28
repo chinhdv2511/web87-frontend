@@ -34,6 +34,13 @@ export default function StoryContainer(props) {
           <Text italic>{props.collectionTitle}</Text>
         </div>
         <div className="story-actions">
+          {props.editable ? (
+            <Button danger onClick={() => navigate(`/story/${props.id}/edit`)}>
+              Edit
+            </Button>
+          ) : (
+            ""
+          )}
           <Button primary>Save to favorite</Button>
         </div>
       </Flex>
@@ -43,7 +50,7 @@ export default function StoryContainer(props) {
       </div>
 
       <Text strong>
-        <Link onClick={() => navigate("/story/" + props._id + "/read")}>
+        <Link onClick={() => navigate("/story/" + props.id + "/read")}>
           Read more
         </Link>
       </Text>
