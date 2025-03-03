@@ -54,8 +54,12 @@ export default function StoryForm({ onSubmit, collections, type, story }) {
       </Form.Item>
 
       <Form.Item name="content" label="Content" rules={CONTENT_RULES}>
-        <Input.TextArea size="large" placeholder="Enter your story content" />
+        <TextEditor />
       </Form.Item>
+      {/* 
+      <TextEditor
+        onChange={(event, editor) => console.log(editor.getContent())}
+      /> */}
 
       <Button type="primary" htmlType="submit" block size="large">
         {buttonLabel}
